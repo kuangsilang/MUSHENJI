@@ -1,0 +1,16 @@
+{
+  "name": "mushenji-chronicle",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "牧神记 3D 可交互编年史",
+  "dependencies": {
+    "three": "^0.186.1"
+  }
+}

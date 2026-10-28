@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>牧神记 · 编年史 — 天黑别出门，人人如龙</title>
+<meta name="description" content="《牧神记》3D 可交互编年史：纪元长河、人物谱、山河图、修行路。同人向粉丝整理。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='14' fill='%23090b12'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle' fill='%23f5cf6b' font-family='KaiTi,serif'%3E牧%3C/text%3E%3C/svg%3E">
+</head>
+<body data-view="hero">
+
+  <!-- 加载 -->
+  <div id="loader">
+    <div class="ring"></div>
+    <div class="lchar">牧</div>
+    <div class="ltext">大墟的祖训说：天黑，别出门。</div>
+  </div>
+
+  <canvas id="gl"></canvas>
+
+  <!-- 光标提灯 -->
+  <div id="cursor-glow"></div>
+
+  <!-- 水墨转场 -->
+  <div id="ink"></div>
+
+  <!-- 顶部导航 -->
+  <header id="nav">
+    <a class="logo" data-view="hero" href="#">
+      <span class="seal">牧</span>
+      <span class="logo-t"><b>牧神记</b><i>编年史 · CHRONICLE</i></span>
+    </a>
+    <nav class="links">
+      <a data-view="hero" href="#" class="on">序章</a>
+      <a data-view="timeline" href="#">编年史</a>
+      <a data-view="stars" href="#">人物谱</a>
+      <a data-view="map" href="#">山河图</a>
+      <a data-view="ladder" href="#">修行路</a>
+    </nav>
+    <button id="sound-btn" class="chip sm">♪ 音效：关</button>
+    <button id="quality-btn" class="chip sm">✦ 画质：高</button>
+    <button id="about-btn" class="chip">卷首 · 档案</button>
+  </header>
+
+  <!-- 开场字幕 -->
+  <div id="intro">
+    <p>大墟的祖训说——</p>
+    <p>「天黑，别出门。」</p>
+    <p>那一夜，少年提灯，走出了家门。</p>
+  </div>
+
+  <main>
+    <!-- 序章 -->
+    <section class="view active" data-view="hero" id="view-hero">
+      <div class="hud">
+        <div class="hero-block">
+          <div class="hero-kicker">宅猪 著 · 玄机科技 动画 · 同人编年史</div>
+          <h1 class="hero-title"><span>牧</span><span>神</span><span>记</span></h1>
+          <div class="hero-sub">编 年 史</div>
+          <p class="hero-quote">「大墟的祖训说，天黑，别出门。」<br>「人人如龙。」</p>
+          <div class="hero-cta">
+            <button class="btn gold" data-goto="timeline">启卷 · 编年史</button>
+            <button class="btn ghost" data-goto="map">观 · 山河图</button>
+            <button class="btn ghost" data-goto="ladder">登 · 修行路</button>
+          </div>
+        </div>
+        <div class="hero-hint">拖动环视大墟之夜 · 点击放天灯 · 长按蓄力放大灯</div>
+        <div class="labels"></div>
+      </div>
+    </section>
+
+    <!-- 编年史 -->
+    <section class="view" data-view="timeline" id="view-timeline">
+      <div class="hud">
+        <div class="vtitle"><h2>编年史</h2><i>CHRONICLE · 五纪兴亡</i></div>
+        <div id="hud-timeline" class="hudbar">
+          <div class="era-row"></div>
+          <div class="hint">高瞰长河 · 拖拽平移 / 滚轮缩放 · 点击史星读史 · 点纪元门跳转 · 空点收回</div>
+        </div>
+        <div class="labels"></div>
+      </div>
+    </section>
+
+    <!-- 人物谱 -->
+    <section class="view" data-view="stars" id="view-stars">
+      <div class="hud">
+        <div class="vtitle"><h2>人物谱</h2><i>STARS · 星图天官</i></div>
+        <div id="hud-stars" class="hudbar">
+          <div class="tab-row">
+            <button class="chip on" data-tab="stars">星曜</button>
+            <button class="chip" data-tab="factions">势力志</button>
+          </div>
+          <div class="grp-row"></div>
+          <div class="hint">拖拽旋转星穹 · 悬停星曜亮关系线 · 点击读小传（金=师承 蓝=同袍 红=魔教 紫=血脉 粉=同行）</div>
+        </div>
+        <div id="faction-wrap">
+          <div id="faction-web"></div>
+          <div id="faction-grid"></div>
+        </div>
+        <div class="labels"></div>
+      </div>
+    </section>
+
+    <!-- 山河图 -->
+    <section class="view" data-view="map" id="view-map">
+      <div class="hud">
+        <div class="vtitle"><h2>山河图</h2><i>ATLAS · 诸天万界</i></div>
+        <div id="hud-map" class="hudbar">
+          <div class="rg-row"></div>
+          <div class="hint">拖拽旋转舆图 · 滚轮缩放 · 点击城郭山川读山河志</div>
+        </div>
+        <div class="labels"></div>
+      </div>
+    </section>
+
+    <!-- 修行路 -->
+    <section class="view" data-view="ladder" id="view-ladder">
+      <div class="hud">
+        <div class="vtitle"><h2>修行路</h2><i>ASCENSION · 七藏成神</i></div>
+        <div id="hud-ladder" class="hudbar">
+          <div class="tab-row">
+            <button class="chip on" data-tab="realms">境界</button>
+            <button class="chip" data-tab="tech">绝学谱</button>
+          </div>
+          <div class="tier-row"></div>
+          <div class="hint">拖拽 / 滚轮逐境登天 · 点击踏阶读境界志 · 梯顶有门，门后有影</div>
+        </div>
+        <div id="tech-wrap"><div id="tech-grid"></div></div>
+        <div class="labels"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 抽屉 -->
+  <div id="drawer-veil"></div>
+  <aside id="drawer">
+    <button id="drawer-close" aria-label="关闭">✕</button>
+    <div id="drawer-body"></div>
+  </aside>
+
+  <footer id="credit">
+    <span>同人向粉丝整理 · 原著 宅猪《牧神记》 · 动画 bilibili × 玄机科技 · 含全书剧透</span>
+  </footer>
+
+  <script type="importmap">
+  { "imports": { "three": "./js/lib/three/build/three.module.js" } }
+  </script>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
